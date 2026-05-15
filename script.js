@@ -60,7 +60,7 @@
                     // Divide por espaços, converte de base 2 para decimal, e depois para caractere
                     const groups = input.split(/\s+/);
                     if (!groups.every(bin => bin.length === 8 && isBinary(bin))) {
-                        throw "Digite apenas bytes binários válidos com 8 bits, separados por espaço.";
+                        throw new Error("Digite apenas bytes binários válidos com 8 bits, separados por espaço.");
                     }
 
                     const chars = groups.map(bin => String.fromCharCode(parseInt(bin, 2)));
@@ -70,7 +70,7 @@
                     // Remove espaços e pega os primeiros 24 bits
                     let cleanInput = input.replace(/\s/g, '');
                     if (!isBinary(cleanInput)) {
-                        throw "Digite apenas 0 e 1 para representar a cor.";
+                        throw new Error("Digite apenas 0 e 1 para representar a cor.");
                     }
 
                     let cleanBin = cleanInput.padEnd(24, '0').substring(0, 24);
@@ -85,7 +85,7 @@
                 else if (type === 'sound') {
                     let cleanInput = input.replace(/\s/g, '');
                     if (!isBinary(cleanInput)) {
-                        throw "Digite apenas 0 e 1 para representar a frequência.";
+                        throw new Error("Digite apenas 0 e 1 para representar a frequência.");
                     }
 
                     let freq = parseInt(cleanInput, 2);
@@ -102,7 +102,7 @@
                 else if (type === 'color') {
                     // Valida input hex
                     let hex = input.replace('#', '');
-                    if (hex.length !== 6) throw "Formato inválido. Use #RRGGBB";
+                    if (hex.length !== 6) throw new Error("Formato inválido. Use #RRGGBB");
                     let r = parseInt(hex.substring(0, 2), 16).toString(2).padStart(8, '0');
                     let g = parseInt(hex.substring(2, 4), 16).toString(2).padStart(8, '0');
                     let b = parseInt(hex.substring(4, 6), 16).toString(2).padStart(8, '0');
@@ -110,13 +110,13 @@
                 } 
                 else if (type === 'sound') {
                     let freq = parseInt(input, 10);
-                    if (isNaN(freq)) throw "Digite um número válido.";
+                    if (isNaN(freq)) throw new Error("Digite um número válido.");
                     let bin = freq.toString(2).padStart(16, '0'); // 16 bits para garantir espaço
                     setOutput(`<strong>Binário (16 bits):</strong> <br> ${bin}`);
                 }
             }
         } catch (e) {
-            setOutput(`Erro ao processar: ${e}`, 'error');
+            setOutput(`Erro ao processar: ${e.message || e}`, 'error');
         }
     }
 
