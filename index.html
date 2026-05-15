@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor Binário Universal (Trabalho Acadêmico)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Tradutor: Binário ↔ GUI Humana</h1>
+    
+    <div class="controls">
+        <select id="direction" onchange="updateInstructions()">
+            <option value="binToHum">Binário para Humano (Renderizar)</option>
+            <option value="humToBin">Humano para Binário (Codificar)</option>
+        </select>
+
+        <select id="dataType" onchange="updateInstructions()">
+            <option value="text">Texto (ASCII/UTF)</option>
+            <option value="color">Cor (RGB - 24 bits)</option>
+            <option value="sound">Som (Frequência em Hz)</option>
+        </select>
+    </div>
+
+    <div class="instructions" id="instructionText">
+        Digite códigos binários separados por espaço (ex: 01001111 01001011).
+    </div>
+
+    <textarea id="inputBox" placeholder="Digite sua entrada aqui..."></textarea>
+    
+    <button onclick="processData()">Processar / Converter</button>
+
+    <div class="output-box" id="outputArea">
+        <em>O resultado aparecerá aqui...</em>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
