@@ -3,40 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conversor Binário Universal (Trabalho Acadêmico)</title>
+    <title>Conversor Binário Universal</title>
+    <meta name="description" content="Converta texto, cores e frequências sonoras entre formatos humanos e binários em uma interface responsiva.">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <main class="page-shell">
+        <section class="app-card" aria-labelledby="app-title">
+            <div class="hero">
+                <span class="eyebrow">Webapp acadêmico</span>
+                <h1 id="app-title">Tradutor: Binário ↔ Interface Humana</h1>
+                <p class="subtitle">
+                    Converta texto, cor e som entre linguagem humana e binária com uma interface mais clara, moderna e pronta para web.
+                </p>
+            </div>
 
-<div class="container">
-    <h1>Tradutor: Binário ↔ GUI Humana</h1>
-    
-    <div class="controls">
-        <select id="direction" onchange="updateInstructions()">
-            <option value="binToHum">Binário para Humano (Renderizar)</option>
-            <option value="humToBin">Humano para Binário (Codificar)</option>
-        </select>
+            <div class="panel-grid">
+                <label class="field">
+                    <span>Direção da conversão</span>
+                    <select id="direction" onchange="updateInstructions()" aria-label="Direção da conversão">
+                        <option value="binToHum">Binário para Humano</option>
+                        <option value="humToBin">Humano para Binário</option>
+                    </select>
+                </label>
 
-        <select id="dataType" onchange="updateInstructions()">
-            <option value="text">Texto (ASCII/UTF)</option>
-            <option value="color">Cor (RGB - 24 bits)</option>
-            <option value="sound">Som (Frequência em Hz)</option>
-        </select>
-    </div>
+                <label class="field">
+                    <span>Tipo de dado</span>
+                    <select id="dataType" onchange="updateInstructions()" aria-label="Tipo de dado">
+                        <option value="text">Texto (ASCII/UTF)</option>
+                        <option value="color">Cor (RGB - 24 bits)</option>
+                        <option value="sound">Som (Frequência em Hz)</option>
+                    </select>
+                </label>
+            </div>
 
-    <div class="instructions" id="instructionText">
-        Digite códigos binários separados por espaço (ex: 01001111 01001011).
-    </div>
+            <div class="instructions" id="instructionText" aria-live="polite">
+                Digite blocos de 8 bits (bytes) separados por espaço, por exemplo: 01001111 01001011.
+            </div>
 
-    <textarea id="inputBox" placeholder="Digite sua entrada aqui..."></textarea>
-    
-    <button onclick="processData()">Processar / Converter</button>
+            <label class="field field-textarea" for="inputBox">
+                <span>Entrada</span>
+                <textarea id="inputBox" placeholder="Digite sua entrada aqui..."></textarea>
+            </label>
 
-    <div class="output-box" id="outputArea">
-        <em>O resultado aparecerá aqui...</em>
-    </div>
-</div>
+            <div class="actions">
+                <button id="convertBtn" type="button" onclick="processData()">Processar conversão</button>
+                <button id="clearBtn" type="button" class="button-secondary" onclick="clearAll()">Limpar</button>
+            </div>
 
-<script src="script.js"></script>
+            <section class="output-card" aria-labelledby="outputTitle">
+                <div class="output-header">
+                    <h2 id="outputTitle">Resultado</h2>
+                    <button id="copyBtn" type="button" class="button-ghost" onclick="copyResult()">Copiar resultado</button>
+                </div>
+                <div class="output-box" id="outputArea" aria-live="polite">
+                    <em>O resultado aparecerá aqui...</em>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
