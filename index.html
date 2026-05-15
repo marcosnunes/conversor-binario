@@ -7,35 +7,60 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<main class="page-shell">
+    <section class="container">
+        <div class="hero">
+            <span class="badge">Conversor interativo</span>
+            <h1>Tradutor: Binário ↔ GUI Humana</h1>
+            <p class="subtitle">Converta texto, cores e frequências com uma interface mais clara, confortável e adaptada para qualquer tela.</p>
+        </div>
 
-<div class="container">
-    <h1>Tradutor: Binário ↔ GUI Humana</h1>
-    
-    <div class="controls">
-        <select id="direction" onchange="updateInstructions()">
-            <option value="binToHum">Binário para Humano (Renderizar)</option>
-            <option value="humToBin">Humano para Binário (Codificar)</option>
-        </select>
+        <div class="controls">
+            <label class="field">
+                <span>Direção da conversão</span>
+                <select id="direction" onchange="updateInstructions()">
+                    <option value="binToHum">Binário para Humano (Renderizar)</option>
+                    <option value="humToBin">Humano para Binário (Codificar)</option>
+                </select>
+            </label>
 
-        <select id="dataType" onchange="updateInstructions()">
-            <option value="text">Texto (ASCII/UTF)</option>
-            <option value="color">Cor (RGB - 24 bits)</option>
-            <option value="sound">Som (Frequência em Hz)</option>
-        </select>
-    </div>
+            <label class="field">
+                <span>Tipo de dado</span>
+                <select id="dataType" onchange="updateInstructions()">
+                    <option value="text">Texto (ASCII/UTF)</option>
+                    <option value="color">Cor (RGB - 24 bits)</option>
+                    <option value="sound">Som (Frequência em Hz)</option>
+                </select>
+            </label>
+        </div>
 
-    <div class="instructions" id="instructionText">
-        Digite códigos binários separados por espaço (ex: 01001111 01001011).
-    </div>
+        <section class="instructions-card" aria-labelledby="instructionTitle">
+            <span class="section-label" id="instructionTitle">Como usar</span>
+            <div class="instructions" id="instructionText">
+                Digite códigos binários separados por espaço (ex: 01001111 01001011).
+            </div>
+        </section>
 
-    <textarea id="inputBox" placeholder="Digite sua entrada aqui..."></textarea>
-    
-    <button onclick="processData()">Processar / Converter</button>
+        <label class="field field-textarea" for="inputBox">
+            <span>Entrada</span>
+            <textarea id="inputBox" placeholder="Digite sua entrada aqui..."></textarea>
+        </label>
 
-    <div class="output-box" id="outputArea">
-        <em>O resultado aparecerá aqui...</em>
-    </div>
-</div>
+        <div class="action-row">
+            <button type="button" onclick="processData()">Processar / Converter</button>
+            <p class="action-hint">Dica: pressione <strong>Ctrl + Enter</strong> para converter mais rápido.</p>
+        </div>
+
+        <section class="output-section" aria-labelledby="outputTitle">
+            <div class="section-heading">
+                <span class="section-label" id="outputTitle">Resultado</span>
+            </div>
+            <div class="output-box output-empty" id="outputArea" aria-live="polite">
+                <em>O resultado aparecerá aqui...</em>
+            </div>
+        </section>
+    </section>
+</main>
 
 <script src="script.js"></script>
 </body>

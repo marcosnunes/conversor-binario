@@ -1,6 +1,12 @@
     // Contexto de áudio para gerar sons
     let audioCtx;
 
+    function setOutput(content, state = 'success') {
+        const output = document.getElementById('outputArea');
+        output.className = `output-box output-${state}`;
+        output.innerHTML = content;
+    }
+
     function updateInstructions() {
         const dir = document.getElementById('direction').value;
         const type = document.getElementById('dataType').value;
@@ -39,7 +45,7 @@
         const output = document.getElementById('outputArea');
 
         if (!input) {
-            output.innerHTML = "<em>Por favor, digite algum valor.</em>";
+            setOutput("<em>Por favor, digite algum valor.</em>", 'error');
             return;
         }
 
@@ -48,8 +54,8 @@
                 // BINÁRIO PARA HUMANO
                 if (type === 'text') {
                     // Divide por espaços, converte de base 2 para decimal, e depois para caractere
-                    const chars = input.split(' ').map(bin => String.fromCharCode(parseInt(bin, 2)));
-                    output.innerHTML = `<strong>Texto:</strong> <br> ${chars.join('')}`;
+                    const chars = input.split(/\s+/).map(bin => String.fromCharCode(parseInt(bin, 2)));
+                    setOutput(`<strong>Texto:</strong> <br> ${chars.join('')}`);
                 } 
                 else if (type === 'color') {
                     // Remove espaços e pega os primeiros 24 bits
@@ -57,22 +63,22 @@
                     let r = parseInt(cleanBin.substring(0, 8), 2) || 0;
                     let g = parseInt(cleanBin.substring(8, 16), 2) || 0;
                     let b = parseInt(cleanBin.substring(16, 24), 2) || 0;
-                    output.innerHTML = `
+                    setOutput(`
                         <strong>Cor RGB(${r}, ${g}, ${b})</strong>
                         <div class="color-preview" style="background-color: rgb(${r}, ${g}, ${b});"></div>
-                    `;
+                    `);
                 } 
                 else if (type === 'sound') {
                     let freq = parseInt(input.replace(/\s/g, ''), 2);
                     playSound(freq);
-                    output.innerHTML = `<strong>Som:</strong> <br> Tocando onda senoidal a ${freq} Hz.`;
+                    setOutput(`<strong>Som:</strong> <br> Tocando onda senoidal a ${freq} Hz.`);
                 }
             } else {
                 // HUMANO PARA BINÁRIO
                 if (type === 'text') {
                     // Pega o código do caractere e converte pra binário (8 bits)
                     const bins = input.split('').map(char => char.charCodeAt(0).toString(2).padStart(8, '0'));
-                    output.innerHTML = `<strong>Binário:</strong> <br> ${bins.join(' ')}`;
+                    setOutput(`<strong>Binário:</strong> <br> ${bins.join(' ')}`);
                 } 
                 else if (type === 'color') {
                     // Valida input hex
@@ -81,17 +87,17 @@
                     let r = parseInt(hex.substring(0, 2), 16).toString(2).padStart(8, '0');
                     let g = parseInt(hex.substring(2, 4), 16).toString(2).padStart(8, '0');
                     let b = parseInt(hex.substring(4, 6), 16).toString(2).padStart(8, '0');
-                    output.innerHTML = `<strong>Binário (R G B):</strong> <br> ${r} ${g} ${b}`;
+                    setOutput(`<strong>Binário (R G B):</strong> <br> ${r} ${g} ${b}`);
                 } 
                 else if (type === 'sound') {
                     let freq = parseInt(input, 10);
                     if (isNaN(freq)) throw "Digite um número válido.";
                     let bin = freq.toString(2).padStart(16, '0'); // 16 bits para garantir espaço
-                    output.innerHTML = `<strong>Binário (16 bits):</strong> <br> ${bin}`;
+                    setOutput(`<strong>Binário (16 bits):</strong> <br> ${bin}`);
                 }
             }
         } catch (e) {
-            output.innerHTML = `<span style="color: red;">Erro ao processar: ${e}</span>`;
+            setOutput(`Erro ao processar: ${e}`, 'error');
         }
     }
 
@@ -116,6 +122,12 @@
         gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.5);
         oscillator.stop(audioCtx.currentTime + 0.5);
     }
+
+    document.getElementById('inputBox').addEventListener('keydown', (event) => {
+        if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+            processData();
+        }
+    });
 
     // Inicializa as instruções corretas no carregamento
     updateInstructions();
