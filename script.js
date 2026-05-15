@@ -7,6 +7,10 @@
         output.innerHTML = content;
     }
 
+    function isBinary(value) {
+        return /^[01]+$/.test(value);
+    }
+
     function updateInstructions() {
         const dir = document.getElementById('direction').value;
         const type = document.getElementById('dataType').value;
@@ -54,12 +58,22 @@
                 // BINÁRIO PARA HUMANO
                 if (type === 'text') {
                     // Divide por espaços, converte de base 2 para decimal, e depois para caractere
-                    const chars = input.split(/\s+/).map(bin => String.fromCharCode(parseInt(bin, 2)));
+                    const groups = input.split(/\s+/);
+                    if (!groups.every(bin => bin.length === 8 && isBinary(bin))) {
+                        throw "Digite apenas bytes binários válidos com 8 bits, separados por espaço.";
+                    }
+
+                    const chars = groups.map(bin => String.fromCharCode(parseInt(bin, 2)));
                     setOutput(`<strong>Texto:</strong> <br> ${chars.join('')}`);
                 } 
                 else if (type === 'color') {
                     // Remove espaços e pega os primeiros 24 bits
-                    let cleanBin = input.replace(/\s/g, '').padEnd(24, '0').substring(0, 24);
+                    let cleanInput = input.replace(/\s/g, '');
+                    if (!isBinary(cleanInput)) {
+                        throw "Digite apenas 0 e 1 para representar a cor.";
+                    }
+
+                    let cleanBin = cleanInput.padEnd(24, '0').substring(0, 24);
                     let r = parseInt(cleanBin.substring(0, 8), 2) || 0;
                     let g = parseInt(cleanBin.substring(8, 16), 2) || 0;
                     let b = parseInt(cleanBin.substring(16, 24), 2) || 0;
@@ -69,7 +83,12 @@
                     `);
                 } 
                 else if (type === 'sound') {
-                    let freq = parseInt(input.replace(/\s/g, ''), 2);
+                    let cleanInput = input.replace(/\s/g, '');
+                    if (!isBinary(cleanInput)) {
+                        throw "Digite apenas 0 e 1 para representar a frequência.";
+                    }
+
+                    let freq = parseInt(cleanInput, 2);
                     playSound(freq);
                     setOutput(`<strong>Som:</strong> <br> Tocando onda senoidal a ${freq} Hz.`);
                 }
