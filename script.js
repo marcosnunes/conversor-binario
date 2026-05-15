@@ -19,7 +19,7 @@
 
         if (dir === 'binToHum') {
             if (type === 'text') {
-                inst.innerText = "Digite blocos de 8 bits (bytes) separados por espaço (ex: 01001111 01001011).";
+                inst.innerText = "Digite blocos de 8 bits (bytes) separados por espaço ou quebra de linha (ex: 01001111 01001011).";
                 input.placeholder = "01001111 01001011";
             } else if (type === 'color') {
                 inst.innerText = "Digite 24 bits (3 bytes) contínuos ou com espaços para representar Vermelho, Verde e Azul (ex: 11111111 00000000 00000000 para vermelho).";
@@ -60,7 +60,7 @@
                     // Divide por espaços, converte de base 2 para decimal, e depois para caractere
                     const groups = input.split(/\s+/);
                     if (!groups.every(bin => bin.length === 8 && isBinary(bin))) {
-                        throw new Error("Digite apenas bytes binários válidos com 8 bits, separados por espaço.");
+                        throw new Error("Cada grupo deve ter exatamente 8 dígitos binários válidos (0 ou 1), separados por espaço ou quebra de linha.");
                     }
 
                     const chars = groups.map(bin => String.fromCharCode(parseInt(bin, 2)));
