@@ -147,7 +147,7 @@ button:focus {
 textarea {
     min-height: 144px;
     resize: vertical;
-    font-family: ui-monospace, SFMono-Regular, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
     line-height: 1.5;
 }
 
@@ -201,7 +201,7 @@ button:hover {
     gap: 12px;
     text-align: center;
     overflow-wrap: anywhere;
-    font-family: ui-monospace, SFMono-Regular, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
     font-size: 1rem;
     background: #fff;
 }

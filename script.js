@@ -7,7 +7,7 @@
         output.innerHTML = content;
     }
 
-    function isBinary(value) {
+    function isValidBinaryString(value) {
         return /^[01]+$/.test(value);
     }
 
@@ -59,7 +59,7 @@
                 if (type === 'text') {
                     // Divide por espaços, converte de base 2 para decimal, e depois para caractere
                     const groups = input.split(/\s+/);
-                    if (!groups.every(bin => bin.length === 8 && isBinary(bin))) {
+                    if (!groups.every(bin => bin.length === 8 && isValidBinaryString(bin))) {
                         throw new Error("Cada grupo deve ter exatamente 8 dígitos binários válidos (0 ou 1), separados por espaço ou quebra de linha.");
                     }
 
@@ -69,7 +69,7 @@
                 else if (type === 'color') {
                     // Remove espaços e pega os primeiros 24 bits
                     let cleanInput = input.replace(/\s/g, '');
-                    if (!isBinary(cleanInput)) {
+                    if (!isValidBinaryString(cleanInput)) {
                         throw new Error("Digite apenas 0 e 1 para representar a cor.");
                     }
 
@@ -84,7 +84,7 @@
                 } 
                 else if (type === 'sound') {
                     let cleanInput = input.replace(/\s/g, '');
-                    if (!isBinary(cleanInput)) {
+                    if (!isValidBinaryString(cleanInput)) {
                         throw new Error("Digite apenas 0 e 1 para representar a frequência.");
                     }
 
